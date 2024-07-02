@@ -37,8 +37,8 @@ def menu(menuNumber):
                            "Enter your menu number "))
 
 #Adds employee to the list and takes the salary function adds it next to the employee
-def addEmployee(cont, employees, salaries):
-    global cont, employees, salaries
+def addEmployee(employees, salaries, cont):
+
 
     while cont == "yes":
 
@@ -60,8 +60,8 @@ def addEmployee(cont, employees, salaries):
     return employees, salaries, cont
 
 #delete employee at certain index
-def deleteEmployee():
-    global cont, employees, salaries
+def deleteEmployee(employees, salaries, cont):
+
     while cont == "yes":
         printList(employees, salaries)
         employeeToDelete = int(input("Please enter employee to delete: "))
@@ -83,7 +83,7 @@ def deleteEmployee():
 
 #ask the user to enter the salary of the employee
 def getSalary():
-    global cont, employees, salaries
+
     while True:
         try:
             newSalaries = float(input("Please enter salary: "))
@@ -98,8 +98,8 @@ def getSalary():
     return salaries
 
 #Print the list of employees and salaries.
-def printList():
-    global cont, employees, salaries
+def printList(employees, salarries):
+
     for i in range(len(employees)):
         print(f'{i + 1}. Employee: {employees[i]}, Salary: {salaries[i]}')
 
