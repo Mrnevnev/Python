@@ -41,8 +41,8 @@ def addEmployee(employees, salaries, cont=None):
         newSalaries = getSalary()
 
         if newEmployees and newSalaries is not None:
-            employees = employees + [newEmployees]
-            salaries = salaries + [newSalaries]
+            employees = employees =+ [newEmployees]
+            salaries = salaries =+ [newSalaries]
             printList(employees, salaries)
 
         cont = input("Do you want to add another employee? (yes/no): ")
@@ -76,9 +76,3 @@ employees, salaries, cont = addEmployee(employees, salaries, cont)
 addEmployee(employees, salaries, cont)
 
 printList(employees, salaries)
-
-
-
-
-
-
