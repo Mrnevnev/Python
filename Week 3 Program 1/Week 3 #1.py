@@ -7,34 +7,39 @@
 #find total salary of employees in list
 #quit if sentinal value is true DONE
 
-
-
 employees = []
 salaries = []
 menuNumber = 1
 cont = "yes"
 
 def menu(menuNumber):
+    global cont
+    menuNumber = int(input("Main Menu \n"
+                               "Main Menu - 1 \n"
+                               "Add Employee - 2 \n"
+                               "Delete Employee - 3 \n"
+                               "Enter your menu number "))
+    if menuNumber == 1 and cont == "no":
+        menu(menuNumber)
+    elif menuNumber == 2:
+        addEmployee(employees, salaries, cont)
+    elif menuNumber == 3:
+        deleteEmployee(employees, salaries, cont)
+
+
+    else:
+        print("invalid menu number")
 
     menuNumber = int(input("Main Menu \n"
-                           "Add Employee - 1 \n"
+                           "Main Menu - 1 \n"
+                           "Add Employee - 2 \n"
+                           "Delete Employee - 3 \n"
                            "Enter your menu number "))
 
-
-    while True:
-        if menuNumber == 1:
-            addEmployee(employees, salaries, cont)
-        else:
-            print("invalid menu number")
-
-        menuNumber = int(input("Main Menu \n"
-                               "Add Employee - 1 \n"
-                               "Enter your menu number "))
-
-
-
 #Adds employee to the list and takes the salary function adds it next to the employee
-def addEmployee(employees, salaries, cont=None):
+def addEmployee(cont, employees, salaries):
+    global cont, employees, salaries
+
     while cont == "yes":
 
         newEmployees = input("Please enter employee name: ")
@@ -47,10 +52,38 @@ def addEmployee(employees, salaries, cont=None):
 
         cont = input("Do you want to add another employee? (yes/no): ")
 
+        printList(employees, salaries)
+    if cont == "no":
+        menu(menuNumber)
+
+
+    return employees, salaries, cont
+
+#delete employee at certain index
+def deleteEmployee():
+    global cont, employees, salaries
+    while cont == "yes":
+        printList(employees, salaries)
+        employeeToDelete = int(input("Please enter employee to delete: "))
+
+        for i in range(len(employees)):
+
+            deletedEmployee = employeeToDelete
+            if deletedEmployee == i + 1:
+                employees = len(employees) - employeeToDelete
+            print(f'{i + 1}. Employee: {employees[i]}, Salary: {salaries[i]}')
+            cont = input("Do you want to add another employee? (yes/no): ")
+
+        print(employees)
+        printList(employees, salaries)
+        menu(menuNumber)
+    if cont == "no":
+        menu(menuNumber)
     return employees, salaries, cont
 
 #ask the user to enter the salary of the employee
 def getSalary():
+    global cont, employees, salaries
     while True:
         try:
             newSalaries = float(input("Please enter salary: "))
@@ -62,10 +95,11 @@ def getSalary():
             # Handle invalid input for minutes used
             print("Invalid input")
             continue
-
+    return salaries
 
 #Print the list of employees and salaries.
-def printList(employees, salaries):
+def printList():
+    global cont, employees, salaries
     for i in range(len(employees)):
         print(f'{i + 1}. Employee: {employees[i]}, Salary: {salaries[i]}')
 
