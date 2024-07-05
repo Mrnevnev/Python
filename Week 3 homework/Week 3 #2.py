@@ -5,8 +5,9 @@
 #Create a function that calculates the total score of a student
 
 #Make a two;dimensional matrix to take in a name and 5 test scores
-studentInfo = ["name", 1, 2, 3, 4, 5]
-studentsInClss = [studentInfo]
+studentInfo = []
+studentsInClss = []
+scores = []
 menuNumber = 0
 cont = "yes"
 #Menu
@@ -22,7 +23,7 @@ def menu(menuNumber):
 
     # Perform action based on option chosen
     if menuNumber == 1:
-        addStudentInfo(studentInfo, studentsInClss, cont)
+        addStudentInfo(studentInfo, studentsInClss, scores, cont)
     elif menuNumber == 0:
         print('Quitting program')
         quit()
@@ -30,28 +31,46 @@ def menu(menuNumber):
         print("Invalid menu number")
 
 #Create a function that validates if the users input is correct.
-def addStudentInfo(studentInfo, studentsInClss, cont):
+def addStudentInfo(studentInfo, studentsInClss, scores, cont):
     i = 0
     while cont == "yes":
-        printList(studentInfo, studentsInClss)
-        newStudent = input("Please enter students name and 5 test scores: ")
-
-        while i != len(studentInfo):
-            newStudent = input("Please enter students name and 5 test scores: ")
+        printList(studentInfo, studentsInClss, scores)
+        numOfStudents = int(input("Please enter how many students: "))
+        for i in range(numOfStudents):
+            newStudent = input("Please enter students name: ")
+            for j in range(5):
+                newScores = getScores(numOfStudents)
             if newStudent is not None:
-                studentInfo += [newStudent]
-                studentsInClss += [studentInfo]
-                printList(studentInfo, studentsInClss)
-        cont = input("Do you want to add another employee? (yes/no): ")
 
+                studentInfo = newStudent
+
+                printList(studentInfo, studentsInClss, scores)
+        cont = input("Do you want to add another employee? (yes/no): ")
     if cont == "no":
         menu(menuNumber)
-    return studentInfo, studentsInClss
+    return studentInfo, studentsInClss, scores
 
-def printList(studentInfo, studentsInClss):
+def getScores(numOfStudents):
+    i = 1
+    while True:
+        try:
+            scores = int(input(f"Please enter students score #{i}: "))
+            if scores < 0:
+                print("No Negative Numbers")
+                continue
+            else:
+                scores += scores
+                i = i + 1
+            return scores
+        except ValueError:
+            print("Invalid input")
+            continue
+    return
+
+def printList(studentInfo, studentsInClss, scores):
     print("List of employees")
-    for i in range(len(studentInfo)):
-        print(f'{i}. Students: {studentInfo[i]}')
+    print("Name" "Scores")
+    print(f'Students: {studentInfo} Scores: {scores}')
 
 
 menu(menuNumber)
