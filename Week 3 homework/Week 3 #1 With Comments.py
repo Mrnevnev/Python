@@ -6,9 +6,10 @@ salaries = []
 menuNumber = 0
 cont = "yes"
 
-
-def menu(menuNumber):
-    # Define global variables
+def menu():
+    """
+    Displays the main menu and performs actions based on the user's choice.
+    """
     global employees, salaries, cont
 
     # Show menu and take user's choice
@@ -19,8 +20,9 @@ def menu(menuNumber):
                            "Add Employee at index - 4 \n"
                            "Total Salary - 5 \n"
                            "Search for employee - 6 \n"
+                           "Sort Salaries - 7 \n"
                            "Quit - 0 \n"
-                           "Enter your menu number "))
+                           "Enter your menu number: "))
 
     # Perform action based on option chosen
     if menuNumber == 1:
@@ -28,13 +30,15 @@ def menu(menuNumber):
     elif menuNumber == 2:
         deleteEmployee(employees, salaries, cont)
     elif menuNumber == 3:
-        printList(employees, salaries)
+        showList(employees, salaries)
     elif menuNumber == 4:
         addEmployeeAtIndex(employees, salaries, cont)
     elif menuNumber == 5:
         totalSalary(salaries)
     elif menuNumber == 6:
         searchEmployee(employees)
+    elif menuNumber == 7:
+        sortSalaries(employees, salaries)
     elif menuNumber == 0:
         print('Quitting program')
         quit()
@@ -42,8 +46,18 @@ def menu(menuNumber):
         print("Invalid menu number")
 
 
-# Function that adds an employee to the list, and their respective salary
 def addEmployee(employees, salaries, cont):
+    """
+    Adds a new employee and their salary to the lists.
+
+    Args:
+        employees (list): List of employee names.
+        salaries (list): List of employee salaries.
+        cont (str): Control variable for continuing or stopping the loop.
+
+    Returns:
+        tuple: Updated employees, salaries, and cont.
+    """
     while cont == "yes":
         printList(employees, salaries)
         newEmployees = input("Please enter employee name: ")
@@ -57,12 +71,22 @@ def addEmployee(employees, salaries, cont):
         cont = input("Do you want to add another employee? (yes/no): ")
 
     if cont == "no":
-        menu(menuNumber)
+        menu()
     return employees, salaries, cont
 
 
-# Function that adds an employee at a specified index
 def addEmployeeAtIndex(employees, salaries, cont):
+    """
+    Adds a new employee and their salary at a specified index in the lists.
+
+    Args:
+        employees (list): List of employee names.
+        salaries (list): List of employee salaries.
+        cont (str): Control variable for continuing or stopping the loop.
+
+    Returns:
+        tuple: Updated employees, salaries, and cont.
+    """
     while cont == "yes":
         printList(employees, salaries)
         newEmployee = input("Please enter employee name: ")
@@ -79,13 +103,23 @@ def addEmployeeAtIndex(employees, salaries, cont):
         cont = input("Do you want to add another employee? (yes/no): ")
 
     if cont == "no":
-        menu(menuNumber)
+        menu()
 
     return employees, salaries, cont
 
 
-# Function that deletes an employee
 def deleteEmployee(employees, salaries, cont):
+    """
+    Deletes an employee and their salary from the lists.
+
+    Args:
+        employees (list): List of employee names.
+        salaries (list): List of employee salaries.
+        cont (str): Control variable for continuing or stopping the loop.
+
+    Returns:
+        tuple: Updated employees, salaries, and cont.
+    """
     while cont == "yes":
         printList(employees, salaries)
         employeeToDelete = int(input("Please enter employee to delete: "))
@@ -99,12 +133,17 @@ def deleteEmployee(employees, salaries, cont):
             print("Invalid input. No such employee index.")
 
     if cont == "no":
-        menu(menuNumber)
+        menu()
     return employees, salaries, cont
 
 
-# Function to get the salary of the employee
 def getSalary():
+    """
+    Prompts the user to enter a valid salary and returns it.
+
+    Returns:
+        float: The entered salary.
+    """
     while True:
         try:
             newSalaries = float(input("Please enter salary: "))
@@ -115,18 +154,40 @@ def getSalary():
         except ValueError:
             print("Invalid input")
             continue
-    return salaries
 
 
-# Function to print list of employees and their salaries
 def printList(employees, salaries):
+    """
+    Prints the list of employees and their salaries.
+
+    Args:
+        employees (list): List of employee names.
+        salaries (list): List of employee salaries.
+    """
     print("List of employees")
     for i in range(len(employees)):
-        print(f'{i}. Employee: {employees[i]}, Salary: {salaries[i]}')
+        print(f'{i}. Employee: {employees[i]}, Salary: ${salaries[i]}')
 
+def showList(employees, salaries):
+    """
+    Prints the list of employees and their salaries.
 
-# Function to search for an employee
+    Args:
+        employees (list): List of employee names.
+        salaries (list): List of employee salaries.
+    """
+    print("List of employees")
+    for i in range(len(employees)):
+        print(f'{i}. Employee: {employees[i]}, Salary: ${salaries[i]}')
+    menu()
+
 def searchEmployee(employees):
+    """
+    Searches for an employee by name and prints their details if found.
+
+    Args:
+        employees (list): List of employee names.
+    """
     employeeName = input("Please enter the name of the employee to search: ")
     if employeeName in employees:
         index = employees.index(employeeName)
@@ -136,16 +197,48 @@ def searchEmployee(employees):
         print(f"With a salary of: {salary}")
     else:
         print(f"{employeeName} is not in the list of employees.")
-    menu(menuNumber)
+    menu()
 
 
-# Function to calculate total salary of employees
 def totalSalary(salaries):
+    """
+    Calculates and prints the total salary of all employees.
+
+    Args:
+        salaries (list): List of employee salaries.
+    """
     totalSalary = 0
     for i in range(len(salaries)):
         totalSalary += salaries[i]
     print(f'Total Salary: {totalSalary}')
+    menu()
+
+def sortSalaries(employees, salaries):
+    """
+    Sorts the salaries and corresponding employee names using selection sort in descending order.
+
+    Args:
+        employees (list): List of employee names.
+        salaries (list): List of employee salaries.
+    """
+    for i in range(len(salaries)):
+        max_index = i
+        for j in range(i + 1, len(salaries)):
+            if salaries[j] > salaries[max_index]:  # Change comparison to '>' for descending order
+                max_index = j
+        # Swap salaries
+        temp_salary = salaries[i]
+        salaries[i] = salaries[max_index]
+        salaries[max_index] = temp_salary
+        # Swap employees to match sorted salaries
+        temp_employee = employees[i]
+        employees[i] = employees[max_index]
+        employees[max_index] = temp_employee
+    print("Salaries sorted successfully in descending order.")
+    printList(employees, salaries)
+    menu()
 
 
 # Display the menu to start the program
-menu(menuNumber)
+if __name__ == "__main__":
+    menu()

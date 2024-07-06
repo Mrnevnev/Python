@@ -72,5 +72,6 @@ def printList(studentInfo, studentsInClss, scores):
     print("Name" "Scores")
     print(f'Students: {studentInfo} Scores: {scores}')
 
-
-menu(menuNumber)
+# Run the program
+if __name__ == "__main__":
+    menu()
