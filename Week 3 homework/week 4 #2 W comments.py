@@ -1,9 +1,8 @@
 """
 Nevill Adeyeye
 7/08/2024
+Week 4 Assignment 2
 """
-
-
 def main():
     """
     Main function to get scores from five judges, calculate final score,
@@ -11,24 +10,27 @@ def main():
     """
     scores = []
     for i in range(5):
-        score = getJudgeScore()  # Get score from a judge
+        score = getJudgeScore(i + 1)  # Get score from a judge
         scores.append(score)  # Append the score to the list of scores
     # Calculate final score by dropping the highest and lowest score, and averaging the rest
     finalScore = calcScore(scores[0], scores[1], scores[2], scores[3], scores[4])
     # Print final score
-    print(f"Final score is:, {finalScore:.2f}")
+    print(f"Final score is: {finalScore:.2f}")
 
 
-def getJudgeScore():
+def getJudgeScore(judge_number):
     """
     Prompts user for judge's score, ensuring it is between 0 and 10.
 
+    Args:
+        judge_number (int): The number of the judge (for display purposes).
+
     Returns:
-        score (float): Judge's score if it is a valid input. Continues to prompt otherwise.
+        float: Judge's score if it is a valid input. Continues to prompt otherwise.
     """
     while True:
         try:
-            score = float(input("Enter judge's score (0-10): "))
+            score = float(input(f"Enter judge {judge_number}'s score (0-10): "))
             if 0 <= score <= 10:
                 return score
             else:
@@ -49,7 +51,7 @@ def findLowestScore(score1, score2, score3, score4, score5):
         score5 (float): Judge 5's score.
 
     Returns:
-        lowest (float): The least score of the five.
+        float: The least score of the five.
     """
     lowest = score1
     if score2 < lowest:
@@ -75,7 +77,7 @@ def findHighestScore(score1, score2, score3, score4, score5):
         score5 (float): Judge 5's score.
 
     Returns:
-        highest (float): The highest score of the five.
+        float: The highest score of the five.
     """
     highest = score1
     if score2 > highest:
@@ -101,7 +103,7 @@ def calcScore(score1, score2, score3, score4, score5):
         score5 (float): Judge 5's score.
 
     Returns:
-        averageScore (float): The average of the middle three scores.
+        float: The average of the middle three scores.
     """
     lowestScore = findLowestScore(score1, score2, score3, score4, score5)
     highestScore = findHighestScore(score1, score2, score3, score4, score5)
