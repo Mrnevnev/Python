@@ -1,0 +1,104 @@
+# BankApp Pseudo Code
+
+# Function to read user information from file DONE
+Function read_user_info(file_name):
+    Open file_name
+    Initialize lists: userName, passWord, balances
+    For each line in file:
+        Split line into username, password, balance
+        Append username to userName list
+        Append password to passWord list
+        Append balance to balances list
+    Close file
+    Return userName, passWord, balance
+
+
+
+# Function to write updated user information to file
+Function write_user_info(file_name, userName, passWord, balances):
+    Open file_name for writing
+    For each index in userName list:
+        Write userName[index], passWord[index], balances[index] to file
+    Close file
+
+
+
+# Function to show the balance
+Function show_balance(user_index, balances):
+    Display balances[user_index]
+
+# Function to deposit money
+Function deposit(user_index, amount, balances):
+    balances[user_index] = balances[user_index] + amount
+
+# Function to withdraw money
+Function withdraw(user_index, amount, balances):
+    If balances[user_index] >= amount:
+        balances[user_index] = balances[user_index] - amount
+    Else:
+        Display "Insufficient funds"
+
+
+
+
+# Function to change user
+Function change_user(userName, passWord):
+    Prompt for username
+    Prompt for password
+    For each index in userName list:
+        If userName[index] == entered username and passWord[index] == entered password:
+            Return index
+    Display "Invalid username or password"
+    Return -1
+
+
+
+
+
+
+# Main Program
+Define file_name as "UserInformation.txt"
+userName, passWord, balances = read_user_info(file_name)
+
+
+current_user_index = -1
+
+
+While True:
+    If current_user_index == -1:
+        current_user_index = change_user(userName, passWord)
+        If current_user_index == -1:
+            Continue
+
+    Display menu options:
+        "Type D to deposit money"
+        "Type W to withdraw money"
+        "Type B to display Balance"
+        "Type C to change user"
+        "Type E to exit"
+
+    Prompt for user input
+
+    If user input is "D":
+        Prompt for deposit amount
+        Call deposit(current_user_index, amount, balances)
+        Call show_balance(current_user_index, balances)
+
+    Elif user input is "W":
+        Call show_balance(current_user_index, balances)
+        Prompt for withdrawal amount
+        Call withdraw(current_user_index, amount, balances)
+        Call show_balance(current_user_index, balances)
+
+    Elif user input is "B":
+        Call show_balance(current_user_index, balances)
+
+    Elif user input is "C":
+        current_user_index = change_user(userName, passWord)
+
+    Elif user input is "E":
+        Call write_user_info(file_name, userName, passWord, balances)
+        Break
+
+    Else:
+        Display "Invalid option"

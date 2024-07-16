@@ -1,21 +1,18 @@
-def readUserInfo(fileName):
+def readUserInfo(file_name):
     """
     Reads the named file and appends the information.
 
     Args:
-    userName = A list that holds the usernames.
-    passWord = [] A list that hold the passwords for each user.
-    balances = [] A list that holds the balances of each user.
-
+    file_name (str): The name of the file to read.
 
     Returns:
-    username, password, balances
+    tuple: A tuple containing lists of usernames, passwords, and balances.
     """
     username = []
     password = []
     balances = []
     try:
-        with open(fileName, 'r') as fo:
+        with open(file_name, 'r') as fo:
             lines = fo.readlines()
             for line in lines:
                 # Strip newline and split on ', ' to get the parts
@@ -35,23 +32,18 @@ def readUserInfo(fileName):
 
     return username, password, balances
 
-def writeUserInfo(username, password, balances, fileName):
-    fo = open(fileName, 'w')
-    for i in range(len(username)):
-        fo.write(f"Username: {username[i]}, Password: {password[i]}, Balance: {balances[i]}\n")
-    fo.close()
+def writeUserInfo(username, password, balances, file_name):
+    with open(file_name, 'w') as fo:
+        for i in range(len(username)):
+            fo.write(f"Username: {username[i]}, Password: {password[i]}, Balance: {balances[i]}\n")
 
 def main():
     """
     Main function of the program. Contains main menu and log in screen.
-
-    Args:
-        username, password, balances uses the readUserInfo function to copy the information from the file.
-
     """
-    fileName = "UserInformation.txt"
+    file_name = "UserInformation.txt"
     currentIndex = -1
-    username, password, balances = readUserInfo(fileName)
+    username, password, balances = readUserInfo(file_name)
     while True:
         if currentIndex == -1:
             currentIndex = changeUser(username, password)
@@ -62,16 +54,14 @@ def main():
               "Type B to display Balance\n"
               "Type C to change user\n"
               "Type E to exit")
-        option = input("Enter your choice: ").upper()
-
 
 def changeUser(usernames, passwords):
-    entered_username = input("Enter your user name: ")
+    entered_username = input("Enter your username: ")
     entered_password = input("Enter your password: ")
     for i in range(len(usernames)):
         if entered_username == usernames[i] and entered_password == passwords[i]:
             return i
-    print("Invalid username and password")
+    print("Invalid username or password")
     return -1
 
 if __name__ == '__main__':
