@@ -1,4 +1,28 @@
+Final Project (150 Points)
+You are going to write a program called BankApp to simulate a banking application.
+The information needed for this project are stored in a text file. Those are:
+usernames, passwords, and balances.
+Your program should read username, passwords, and balances for each customer, and
+store them into three lists.
+userName (string), passWord(string), balances(float)
+The txt file with information is provided as UserInformtion.txt
+Example: This will demonstrate if file only contains information of 3 customers. You
+could add more users into the file.
+userName passWord Balance
+========================
+Mike sorat1237# 350
+Jane para432@4 400
+Steve asora8731% 500
+When a user runs your program, it should ask for the username and password
+first. Check if the user matches a customer in the bank with the information
+provided. Remember username and password should be case sensitive.
+After asking for the user name, and password display a menu with the following
+options and ask the user for input (Use a While Loop).
+
+
 # BankApp Pseudo Code
+
+
 
 # Function to read user information from file DONE
 Function read_user_info(file_name):

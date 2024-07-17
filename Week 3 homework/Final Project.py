@@ -63,7 +63,28 @@ def main():
               "Type C to change user\n"
               "Type E to exit")
         option = input("Enter your choice: ").upper()
+        if option == 'D':
+            depositMoney(username[currentIndex], balances, currentIndex)
+        elif option == 'W':
+            withdrawMoney(username[currentIndex], balances, currentIndex)
+        elif option == 'B':
+            displayBalance(username[currentIndex], balances[currentIndex])
+        elif option == 'C':
+            currentIndex = changeUser(username, password)
+        elif option == 'E':
+            writeUserInfo(username, password, balances, fileName)
+            quit()
+        else:
+            print("Invalid option. Please try again.")
 
+def displayBalance(username, balance):
+    print(f"Username: {username}, Balance: {balance}")
+
+def depositMoney(username, balances, currentIndex):
+    amount = float(input("Enter the amount to deposit: "))
+    balances[currentIndex] += amount
+    print(f"New balance for {username} is {balances[currentIndex]}")
+    return balances
 
 def changeUser(usernames, passwords):
     entered_username = input("Enter your user name: ")
@@ -73,6 +94,12 @@ def changeUser(usernames, passwords):
             return i
     print("Invalid username and password")
     return -1
+
+def withdrawMoney(username, balances, currentIndex):
+    amount = float(input("Enter the amount to withdraw: "))
+    balances[currentIndex] -= amount
+    print(f"New balance for {username} is {balances[currentIndex]}")
+    return balances
 
 if __name__ == '__main__':
     main()
