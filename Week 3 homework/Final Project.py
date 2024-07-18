@@ -38,7 +38,7 @@ def readUserInfo(fileName):
 def writeUserInfo(username, password, balances, fileName):
     fo = open(fileName, 'w')
     for i in range(len(username)):
-        fo.write(f"Username: {username[i]}, Password: {password[i]}, Balance: {balances[i]}\n")
+        fo.write(f"Username: {username[i]}, Password: {password[i]}, Balance: {balances[i]:2.f}\n")
     fo.close()
 
 def main():
@@ -78,13 +78,45 @@ def main():
             print("Invalid option. Please try again.")
 
 def displayBalance(username, balance):
-    print(f"Username: {username}, Balance: {balance}")
+    print(f"Username: {username}, Balance: {balance:.2f}")
 
+'''
+Need to make it so the function will loop when amount is negative
+ also for invalid inputs like strings
+ '''
 def depositMoney(username, balances, currentIndex):
-    amount = float(input("Enter the amount to deposit: "))
-    balances[currentIndex] += amount
-    print(f"New balance for {username} is {balances[currentIndex]}")
-    return balances
+    while True:
+        try:
+            amount = float(input("Enter the amount to deposit: "))
+            if amount < 0:
+                print("Negative amount entered")
+            else:
+                balances[currentIndex] += amount
+                print(f"New balance for {username} is {balances[currentIndex]:.2f}")
+                return balances
+        except:
+            print("Invalid amount. Please try again.")
+
+'''
+Need to amake function check to see if withdraw amount is < balance
+also for invalid inputs like strings
+'''
+def withdrawMoney(username, balances, currentIndex):
+    while True:
+        try:
+            amount = float(input("Enter the amount to withdraw: "))
+            if amount < 0:
+                print("No Negative Numbers")
+            elif amount > balances[currentIndex]:
+                print("Not Enough Money For Withdraw")
+                continue
+            else:
+                balances[currentIndex] -= amount
+                print(f"New balance for {username} is {balances[currentIndex]:.2f}")
+                return balances
+        except ValueError:
+            print("Invalid amount entered")
+
 
 def changeUser(usernames, passwords):
     entered_username = input("Enter your user name: ")
@@ -94,12 +126,6 @@ def changeUser(usernames, passwords):
             return i
     print("Invalid username and password")
     return -1
-
-def withdrawMoney(username, balances, currentIndex):
-    amount = float(input("Enter the amount to withdraw: "))
-    balances[currentIndex] -= amount
-    print(f"New balance for {username} is {balances[currentIndex]}")
-    return balances
 
 if __name__ == '__main__':
     main()
