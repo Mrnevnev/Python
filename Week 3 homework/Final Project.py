@@ -46,7 +46,7 @@ def main():
     Main function of the program. Contains main menu and log in screen.
 
     Args:
-        username, password, balances uses the readUserInfo function to copy the information from the file.
+
 
     """
     fileName = "UserInformation.txt"
@@ -77,14 +77,25 @@ def main():
         else:
             print("Invalid option. Please try again.")
 
+
 def displayBalance(username, balance):
+    """
+    Display function of the program. Displays the balance amount of the logged in user.
+
+    Args:
+
+    """
     print(f"Username: {username}, Balance: {balance:.2f}")
 
-'''
-Need to make it so the function will loop when amount is negative
- also for invalid inputs like strings
- '''
+
 def depositMoney(username, balances, currentIndex):
+    """
+    Deposit function that deposits amount give by user to account.
+    Displays the balance amount of the logged-in user.
+
+    Args:
+
+    """
     while True:
         try:
             amount = float(input("Enter the amount to deposit: "))
@@ -97,11 +108,15 @@ def depositMoney(username, balances, currentIndex):
         except:
             print("Invalid amount. Please try again.")
 
-'''
-Need to amake function check to see if withdraw amount is < balance
-also for invalid inputs like strings
-'''
+
 def withdrawMoney(username, balances, currentIndex):
+    """
+    Withdraw function that withdraws amount give by user to account.
+    Displays the balance amount of the logged-in user.
+
+    Args:
+
+    """
     while True:
         try:
             amount = float(input("Enter the amount to withdraw: "))
@@ -119,6 +134,13 @@ def withdrawMoney(username, balances, currentIndex):
 
 
 def changeUser(usernames, passwords):
+    """
+    Change user function that lets you change accounts upon successful log-in information.
+    Displays the balance amount of the logged-in user.
+
+    Args:
+
+    """
     entered_username = input("Enter your user name: ")
     entered_password = input("Enter your password: ")
     for i in range(len(usernames)):
