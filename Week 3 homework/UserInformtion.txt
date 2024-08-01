@@ -1,0 +1,3 @@
+Username: Mike, Password: sorat1237#, Balance: 390.00
+Username: Jane, Password: para432@4, Balance: 400.00
+Username: Steve, Password: asora8731%, Balance: 500.00

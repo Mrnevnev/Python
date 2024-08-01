@@ -3,13 +3,10 @@ def readUserInfo(fileName):
     Reads the named file and appends the information.
 
     Args:
-    userName = A list that holds the usernames.
-    passWord = [] A list that hold the passwords for each user.
-    balances = [] A list that holds the balances of each user.
-
+    fileName (str): The name of the file to read.
 
     Returns:
-    username, password, balances
+    tuple: A tuple containing lists of usernames, passwords, and balances.
     """
     username = []
     password = []
@@ -18,13 +15,12 @@ def readUserInfo(fileName):
         with open(fileName, 'r') as fo:
             lines = fo.readlines()
             for line in lines:
-                # Strip newline and split on ', ' to get the parts
-                parts = line.strip().split(', ')
+                # Split line into components based on spaces
+                parts = line.strip().split()
                 if len(parts) == 3:
-                    # Split on ': ' to get key-value pairs and extract values
-                    user = parts[0].split(': ')[1]
-                    pwd = parts[1].split(': ')[1]
-                    bal = float(parts[2].split(': ')[1])
+                    user = parts[0]
+                    pwd = parts[1]
+                    bal = float(parts[2])
                     username.append(user)
                     password.append(pwd)
                     balances.append(bal)
@@ -36,20 +32,15 @@ def readUserInfo(fileName):
     return username, password, balances
 
 def writeUserInfo(username, password, balances, fileName):
-    fo = open(fileName, 'w')
-    for i in range(len(username)):
-        fo.write(f"Username: {username[i]}, Password: {password[i]}, Balance: {balances[i]:2.f}\n")
-    fo.close()
+    with open(fileName, 'w') as fo:
+        for i in range(len(username)):
+            fo.write(f"Username: {username[i]}, Password: {password[i]}, Balance: {balances[i]:.2f}\n")
 
 def main():
     """
     Main function of the program. Contains main menu and log in screen.
-
-    Args:
-
-
     """
-    fileName = "UserInformation.txt"
+    fileName = "UserInformtion.txt"
     currentIndex = -1
     username, password, balances = readUserInfo(fileName)
     while True:
@@ -73,64 +64,66 @@ def main():
             currentIndex = changeUser(username, password)
         elif option == 'E':
             writeUserInfo(username, password, balances, fileName)
-            quit()
+            break
         else:
             print("Invalid option. Please try again.")
 
 
 def displayBalance(username, balance):
     """
-    Display function of the program. Displays the balance amount of the logged in user.
+    Displays the balance amount of the logged-in user.
 
     Args:
-
+    username (str): The username of the logged-in user.
+    balance (float): The balance of the logged-in user.
     """
     print(f"Username: {username}, Balance: {balance:.2f}")
 
 
 def depositMoney(username, balances, currentIndex):
     """
-    Deposit function that deposits amount give by user to account.
-    Displays the balance amount of the logged-in user.
+    Deposits amount given by user to account and displays the updated balance.
 
     Args:
-
+    username (str): The username of the logged-in user.
+    balances (list): The list of balances of all users.
+    currentIndex (int): The index of the current user in the list.
     """
     while True:
         try:
             amount = float(input("Enter the amount to deposit: "))
             if amount < 0:
-                print("Negative amount entered")
+                print("Negative amount entered. Please enter a positive amount.")
             else:
                 balances[currentIndex] += amount
                 print(f"New balance for {username} is {balances[currentIndex]:.2f}")
-                return balances
-        except:
-            print("Invalid amount. Please try again.")
+                return
+        except ValueError:
+            print("Invalid amount. Please enter a numerical value.")
 
 
 def withdrawMoney(username, balances, currentIndex):
     """
-    Withdraw function that withdraws amount give by user to account.
-    Displays the balance amount of the logged-in user.
+    Withdraws amount given by user from account and displays the updated balance.
 
     Args:
-
+    username (str): The username of the logged-in user.
+    balances (list): The list of balances of all users.
+    currentIndex (int): The index of the current user in the list.
     """
     while True:
         try:
             amount = float(input("Enter the amount to withdraw: "))
             if amount < 0:
-                print("No Negative Numbers")
+                print("No negative numbers. Please enter a positive amount.")
             elif amount > balances[currentIndex]:
-                print("Not Enough Money For Withdraw")
-                continue
+                print("Not enough money for withdrawal. Please enter a smaller amount.")
             else:
                 balances[currentIndex] -= amount
                 print(f"New balance for {username} is {balances[currentIndex]:.2f}")
-                return balances
+                return
         except ValueError:
-            print("Invalid amount entered")
+            print("Invalid amount entered. Please enter a numerical value.")
 
 
 def changeUser(usernames, passwords):
@@ -139,7 +132,11 @@ def changeUser(usernames, passwords):
     Displays the balance amount of the logged-in user.
 
     Args:
+    usernames (list): The list of usernames of all users.
+    passwords (list): The list of passwords of all users.
 
+    Returns:
+    int: The index of the logged-in user in the list, or -1 if login fails.
     """
     entered_username = input("Enter your user name: ")
     entered_password = input("Enter your password: ")
